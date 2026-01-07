@@ -1,0 +1,17 @@
+# Node
+node_modules/
+dist/
+.env
+*.log
+*.tsbuildinfo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test
+coverage/
+
+*.tgz
+*.tar.gz
+vendor/

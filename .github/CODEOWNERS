@@ -1,0 +1,32 @@
+# This file defines code ownership for the Janus repository.
+# Each line is a file pattern followed by one or more owners.
+# Owners will be automatically requested for review when someone opens a pull request.
+
+# Global ownership - default for everything in the repo
+* @JCDubs
+
+# Documentation files
+*.md @JCDubs
+/docs/ @JCDubs
+
+# Configuration files
+*.json @JCDubs
+*.yaml @JCDubs
+*.yml @JCDubs
+*.config.js @JCDubs
+*.config.ts @JCDubs
+
+# Source code
+/src/ @JCDubs
+
+# Tests
+**/*.test.ts @JCDubs
+**/*.spec.ts @JCDubs
+
+# Build and CI/CD
+/.github/ @JCDubs
+/dist/ @JCDubs
+
+# Security-related files
+/SECURITY.md @JCDubs
+/CODE_OF_CONDUCT.md @JCDubs
