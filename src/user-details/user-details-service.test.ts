@@ -1,24 +1,24 @@
-import type { APIGatewayProxyEvent } from "aws-lambda";
+import type { APIGatewayProxyEvent } from 'aws-lambda';
 import {
 	getRoles,
 	getUserName,
 	resetDetails,
 	setUserDetails,
-} from "./user-details-service";
+} from './user-details-service';
 
-describe("UserDetailService", () => {
+describe('UserDetailService', () => {
 	beforeEach(() => {
 		resetDetails();
 	});
 
-	describe("setUserDetails", () => {
-		it("should set user details when event has valid authorizer with single role", () => {
+	describe('setUserDetails', () => {
+		it('should set user details when event has valid authorizer with single role', () => {
 			const mockEvent = {
 				requestContext: {
 					authorizer: {
 						claims: {
-							"cognito:username": "testUser",
-							"cognito:groups": "admin",
+							'cognito:username': 'testUser',
+							'cognito:groups': 'admin',
 						},
 					},
 				},
@@ -26,17 +26,17 @@ describe("UserDetailService", () => {
 
 			setUserDetails(mockEvent);
 
-			expect(getUserName()).toBe("testUser");
-			expect(getRoles()).toEqual(["admin"]);
+			expect(getUserName()).toBe('testUser');
+			expect(getRoles()).toEqual(['admin']);
 		});
 
-		it("should set user details when event has valid authorizer with multiple roles", () => {
+		it('should set user details when event has valid authorizer with multiple roles', () => {
 			const mockEvent = {
 				requestContext: {
 					authorizer: {
 						claims: {
-							"cognito:username": "testUser",
-							"cognito:groups": ["admin", "user"],
+							'cognito:username': 'testUser',
+							'cognito:groups': ['admin', 'user'],
 						},
 					},
 				},
@@ -44,11 +44,11 @@ describe("UserDetailService", () => {
 
 			setUserDetails(mockEvent);
 
-			expect(getUserName()).toBe("testUser");
-			expect(getRoles()).toEqual(["admin", "user"]);
+			expect(getUserName()).toBe('testUser');
+			expect(getRoles()).toEqual(['admin', 'user']);
 		});
 
-		it("should handle event without authorizer", () => {
+		it('should handle event without authorizer', () => {
 			const mockEvent = {
 				requestContext: {},
 			} as unknown as APIGatewayProxyEvent;
@@ -59,7 +59,7 @@ describe("UserDetailService", () => {
 			expect(getRoles()).toBeUndefined();
 		});
 
-		it("should handle event with empty claims", () => {
+		it('should handle event with empty claims', () => {
 			const mockEvent = {
 				requestContext: {
 					authorizer: {
@@ -75,66 +75,66 @@ describe("UserDetailService", () => {
 		});
 	});
 
-	describe("getUserName", () => {
-		it("should return undefined when username is not set", () => {
+	describe('getUserName', () => {
+		it('should return undefined when username is not set', () => {
 			expect(getUserName()).toBeUndefined();
 		});
 
-		it("should return username when set", () => {
+		it('should return username when set', () => {
 			const mockEvent = {
 				requestContext: {
 					authorizer: {
 						claims: {
-							"cognito:username": "testUser",
-							"cognito:groups": ["admin"],
+							'cognito:username': 'testUser',
+							'cognito:groups': ['admin'],
 						},
 					},
 				},
 			} as unknown as APIGatewayProxyEvent;
 
 			setUserDetails(mockEvent);
-			expect(getUserName()).toBe("testUser");
+			expect(getUserName()).toBe('testUser');
 		});
 	});
 
-	describe("getRoles", () => {
-		it("should return undefined when roles are not set", () => {
+	describe('getRoles', () => {
+		it('should return undefined when roles are not set', () => {
 			expect(getRoles()).toBeUndefined();
 		});
 
-		it("should return roles when set", () => {
+		it('should return roles when set', () => {
 			const mockEvent = {
 				requestContext: {
 					authorizer: {
 						claims: {
-							"cognito:username": "testUser",
-							"cognito:groups": ["admin", "user"],
+							'cognito:username': 'testUser',
+							'cognito:groups': ['admin', 'user'],
 						},
 					},
 				},
 			} as unknown as APIGatewayProxyEvent;
 
 			setUserDetails(mockEvent);
-			expect(getRoles()).toEqual(["admin", "user"]);
+			expect(getRoles()).toEqual(['admin', 'user']);
 		});
 	});
 
-	describe("resetDetails", () => {
-		it("should reset all user details", () => {
+	describe('resetDetails', () => {
+		it('should reset all user details', () => {
 			const mockEvent = {
 				requestContext: {
 					authorizer: {
 						claims: {
-							"cognito:username": "testUser",
-							"cognito:groups": ["admin"],
+							'cognito:username': 'testUser',
+							'cognito:groups': ['admin'],
 						},
 					},
 				},
 			} as unknown as APIGatewayProxyEvent;
 
 			setUserDetails(mockEvent);
-			expect(getUserName()).toBe("testUser");
-			expect(getRoles()).toEqual(["admin"]);
+			expect(getUserName()).toBe('testUser');
+			expect(getRoles()).toEqual(['admin']);
 
 			resetDetails();
 			expect(getUserName()).toBeUndefined();

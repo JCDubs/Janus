@@ -1,7 +1,7 @@
-import { Logger } from "@aws-lambda-powertools/logger";
-import type { Policy, PolicyId } from "@cedar-policy/cedar-wasm";
+import { Logger } from '@aws-lambda-powertools/logger';
+import type { Policy, PolicyId } from '@cedar-policy/cedar-wasm';
 
-const logger = new Logger({ serviceName: "policy-parser" });
+const logger = new Logger({ serviceName: 'policy-parser' });
 
 /**
  * Parses a Cedar policy file and splits it into individual policy objects.
@@ -62,20 +62,20 @@ export function splitCedarPolicies(
 ): Record<PolicyId, Policy> {
 	const results: string[] = [];
 
-	let buf = "";
+	let buf = '';
 	let inString = false; // inside "..."
 	let inLineComment = false; // inside // ...
 	let inBlockComment = false; // inside /* ... */
-	let prev = "";
+	let prev = '';
 
 	for (let i = 0; i < policyFile.length; i++) {
 		const ch = policyFile[i];
-		const next = i + 1 < policyFile.length ? policyFile[i + 1] : "";
+		const next = i + 1 < policyFile.length ? policyFile[i + 1] : '';
 
 		// End line comment
 		if (inLineComment) {
 			buf += ch;
-			if (ch === "\n") inLineComment = false;
+			if (ch === '\n') inLineComment = false;
 			prev = ch;
 			continue;
 		}
@@ -83,34 +83,34 @@ export function splitCedarPolicies(
 		// End block comment
 		if (inBlockComment) {
 			buf += ch;
-			if (prev === "*" && ch === "/") inBlockComment = false;
+			if (prev === '*' && ch === '/') inBlockComment = false;
 			prev = ch;
 			continue;
 		}
 
 		// Start line comment (only when not in string)
-		if (!inString && ch === "/" && next === "/") {
+		if (!inString && ch === '/' && next === '/') {
 			inLineComment = true;
 			buf += ch; // add '/'
 			// next char will be processed in next loop iteration, so add it now and skip
 			buf += next; // add second '/'
 			i++;
-			prev = "/";
+			prev = '/';
 			continue;
 		}
 
 		// Start block comment (only when not in string)
-		if (!inString && ch === "/" && next === "*") {
+		if (!inString && ch === '/' && next === '*') {
 			inBlockComment = true;
 			buf += ch; // add '/'
 			buf += next; // add '*'
 			i++;
-			prev = "*";
+			prev = '*';
 			continue;
 		}
 
 		// Toggle string state on unescaped double quote
-		if (ch === `"` && prev !== "\\") {
+		if (ch === `"` && prev !== '\\') {
 			inString = !inString;
 			buf += ch;
 			prev = ch;
@@ -121,10 +121,10 @@ export function splitCedarPolicies(
 		buf += ch;
 
 		// Policy terminator: semicolon outside string/comments
-		if (!inString && ch === ";") {
+		if (!inString && ch === ';') {
 			const policy = buf.trim();
 			if (policy.length > 0) results.push(policy);
-			buf = "";
+			buf = '';
 		}
 
 		prev = ch;
@@ -135,7 +135,7 @@ export function splitCedarPolicies(
 	if (tail.length > 0) {
 		throw new Error(
 			"Trailing content after last policy terminator ';'. " +
-				"The policy file may be missing a semicolon at the end.",
+				'The policy file may be missing a semicolon at the end.',
 		);
 	}
 

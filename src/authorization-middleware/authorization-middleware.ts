@@ -1,13 +1,13 @@
-import { Logger } from "@aws-lambda-powertools/logger";
-import type middy from "@middy/core";
-import type { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
+import { Logger } from '@aws-lambda-powertools/logger';
+import type middy from '@middy/core';
+import type { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import {
 	type AuthorizationConfigType,
 	AuthorizationService,
-} from "../authorization-service";
-import { setUserDetails } from "../user-details";
+} from '../authorization-service';
+import { setUserDetails } from '../user-details';
 
-const logger = new Logger({ serviceName: "authorization-middleware" });
+const logger = new Logger({ serviceName: 'authorization-middleware' });
 
 /**
  * Middy middleware that loads Cedar authorization and user details for policy-based authorization.
@@ -85,18 +85,18 @@ export const loadCedarAuthorization = (
 		APIGatewayProxyEvent,
 		APIGatewayProxyResult
 	> = async (request): Promise<void> => {
-		logger.debug("Loading authorization services...", {
+		logger.debug('Loading authorization services...', {
 			authorizationConfig,
 		});
 
-		const refresh = request.event.headers?.["cedar-refresh"]
-			? request.event.headers["cedar-refresh"] === "true"
+		const refresh = request.event.headers?.['cedar-refresh']
+			? request.event.headers['cedar-refresh'] === 'true'
 			: false;
 
 		setUserDetails(request.event);
 		await AuthorizationService.getService(authorizationConfig, refresh);
 	};
-	logger.debug("Authorization services loaded and configured.");
+	logger.debug('Authorization services loaded and configured.');
 	return {
 		before,
 	};

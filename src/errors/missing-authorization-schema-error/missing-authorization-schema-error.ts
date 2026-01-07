@@ -40,7 +40,7 @@ export class MissingAuthorizationSchemaError extends Error {
 	 * in error handling and logging.
 	 */
 	constructor() {
-		super("Missing authorization schema details");
-		this.name = "MissingAuthorizationSchemaError";
+		super('Missing authorization schema details');
+		this.name = 'MissingAuthorizationSchemaError';
 	}
 }

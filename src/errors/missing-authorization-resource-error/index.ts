@@ -1,1 +1,1 @@
-export * from "./missing-authorization-resource-error";
+export * from './missing-authorization-resource-error';

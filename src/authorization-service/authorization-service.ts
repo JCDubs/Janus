@@ -1,20 +1,20 @@
-import { Logger } from "@aws-lambda-powertools/logger";
-import * as cedar from "@cedar-policy/cedar-wasm/nodejs";
+import { Logger } from '@aws-lambda-powertools/logger';
+import * as cedar from '@cedar-policy/cedar-wasm/nodejs';
 import {
 	MissingAuthenticatedUserDetailsError,
 	MissingAuthorizationActionError,
 	MissingAuthorizationPolicyError,
 	MissingAuthorizationResourceError,
 	MissingAuthorizationSchemaError,
-} from "../errors";
-import { loadFileAsString } from "../file-loader/file-loader";
-import { getRoles, getUserName } from "../user-details";
-import { splitCedarPolicies } from "./policy-parser";
-import type { AuthorizationConfigType } from "./types";
+} from '../errors';
+import { loadFileAsString } from '../file-loader/file-loader';
+import { getRoles, getUserName } from '../user-details';
+import { splitCedarPolicies } from './policy-parser';
+import type { AuthorizationConfigType } from './types';
 
-const logger = new Logger({ serviceName: "authorization-service" });
-const POLICY_FILE_NAME = "policies.cedar";
-const SCHEMA_FILE_NAME = "schema.cedarschema";
+const logger = new Logger({ serviceName: 'authorization-service' });
+const POLICY_FILE_NAME = 'policies.cedar';
+const SCHEMA_FILE_NAME = 'schema.cedarschema';
 
 /**
  * Service for evaluating Cedar policy-based authorization requests.
@@ -194,20 +194,20 @@ export class AuthorizationService {
 		// Validate that a username and roles is available.
 		if (!getUserName() || !getRoles()) {
 			logger.error(
-				"Authenticated user username or roles has not been provided",
+				'Authenticated user username or roles has not been provided',
 			);
 			throw new MissingAuthenticatedUserDetailsError();
 		}
 
 		// Validate the cedar scope
 		if (!this.action) {
-			logger.error("Cedar authorization action has not been provided");
+			logger.error('Cedar authorization action has not been provided');
 			throw new MissingAuthorizationActionError();
 		}
 
 		// Validate the cedar scope
 		if (!this.resource) {
-			logger.error("Cedar authorization resource has not been provided");
+			logger.error('Cedar authorization resource has not been provided');
 			throw new MissingAuthorizationResourceError();
 		}
 	}
@@ -245,7 +245,7 @@ export class AuthorizationService {
 	private constructUserEntity(): cedar.EntityJson {
 		const userName = getUserName();
 		if (!userName) {
-			logger.error("Authenticated user username has not been provided");
+			logger.error('Authenticated user username has not been provided');
 			throw new MissingAuthenticatedUserDetailsError();
 		}
 		return {
@@ -306,15 +306,15 @@ export class AuthorizationService {
 
 		const userName = getUserName();
 		if (!userName) {
-			logger.error("Authenticated user username has not been provided");
+			logger.error('Authenticated user username has not been provided');
 			throw new MissingAuthenticatedUserDetailsError();
 		}
 		if (!this.action) {
-			logger.error("Cedar authorization action has not been provided");
+			logger.error('Cedar authorization action has not been provided');
 			throw new MissingAuthorizationActionError();
 		}
 		if (!this.resource) {
-			logger.error("Cedar authorization resource has not been provided");
+			logger.error('Cedar authorization resource has not been provided');
 			throw new MissingAuthorizationResourceError();
 		}
 		return {
@@ -369,19 +369,19 @@ export class AuthorizationService {
 	 * ```
 	 */
 	isAuthorized(): boolean {
-		logger.debug("Authorizing request...");
+		logger.debug('Authorizing request...');
 		const builtAuthRequest = this.build();
-		logger.debug("Built Authorization request", { builtAuthRequest });
+		logger.debug('Built Authorization request', { builtAuthRequest });
 		const authResult = cedar.isAuthorized(builtAuthRequest);
-		logger.debug("Auth Result", { authResult });
+		logger.debug('Auth Result', { authResult });
 
-		if (authResult.type === "failure") {
-			logger.debug("A problem occurred while authorizing the request", {
+		if (authResult.type === 'failure') {
+			logger.debug('A problem occurred while authorizing the request', {
 				authResult,
 			});
-			throw Error(authResult.errors.map((error) => error.message).join("\n"));
+			throw Error(authResult.errors.map((error) => error.message).join('\n'));
 		}
-		return authResult.response.decision === ("allow" as cedar.Decision);
+		return authResult.response.decision === ('allow' as cedar.Decision);
 	}
 
 	/**
@@ -428,7 +428,7 @@ export class AuthorizationService {
 		refresh = false,
 	): Promise<AuthorizationService> {
 		if (!refresh && AuthorizationService.service) {
-			logger.debug("Returning cached Authorization service");
+			logger.debug('Returning cached Authorization service');
 			return AuthorizationService.service;
 		}
 
@@ -449,7 +449,7 @@ export class AuthorizationService {
 			throw new MissingAuthorizationSchemaError();
 		}
 
-		logger.debug("Policy and Schema loaded", {
+		logger.debug('Policy and Schema loaded', {
 			policy,
 			schema,
 		});

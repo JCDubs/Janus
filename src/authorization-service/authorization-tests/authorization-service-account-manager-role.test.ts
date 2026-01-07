@@ -1,16 +1,16 @@
-import * as fileLoader from "../../file-loader/file-loader";
+import * as fileLoader from '../../file-loader/file-loader';
 
-const uuid = () => "test-uuid-123";
+const uuid = () => 'test-uuid-123';
 
-import * as userDetails from "../../user-details";
-import { AuthorizationService } from "../authorization-service";
-import { authorizationConfig } from "./config";
-import { createOrderEntity } from "./create-order-entity";
-import { getPolicy, getSchema } from "./get-policy";
-import { OrderAction, Role, Status } from "./types";
+import * as userDetails from '../../user-details';
+import { AuthorizationService } from '../authorization-service';
+import { authorizationConfig } from './config';
+import { createOrderEntity } from './create-order-entity';
+import { getPolicy, getSchema } from './get-policy';
+import { OrderAction, Role, Status } from './types';
 
-jest.mock("../../user-details");
-jest.mock("../../file-loader/file-loader");
+jest.mock('../../user-details');
+jest.mock('../../file-loader/file-loader');
 
 const mockGetUserName = userDetails.getUserName as jest.MockedFunction<
 	typeof userDetails.getUserName
@@ -25,7 +25,7 @@ const mockLoadFileAsString = fileLoader.loadFileAsString as jest.MockedFunction<
 let policy: string;
 let schema: string;
 
-describe("Account Manager role tests", () => {
+describe('Account Manager role tests', () => {
 	let authService: AuthorizationService;
 
 	beforeAll(() => {
@@ -40,9 +40,9 @@ describe("Account Manager role tests", () => {
 			.mockReturnValueOnce(schema);
 	});
 
-	it("Account Managers can get orders for customer accounts they manage", async () => {
+	it('Account Managers can get orders for customer accounts they manage', async () => {
 		const orderId = uuid();
-		const userName = "account-manager-one";
+		const userName = 'account-manager-one';
 		mockGetUserName.mockReturnValue(userName);
 		mockGetRoles.mockReturnValue([Role.ACCOUNT_MANAGERS, Role.USER]);
 		authService = await AuthorizationService.getService(
@@ -55,9 +55,9 @@ describe("Account Manager role tests", () => {
 			.addEntity(
 				createOrderEntity({
 					id: orderId,
-					createdBy: "test-1",
-					customer: "customer-1",
-					accountManager: "account-manager-one",
+					createdBy: 'test-1',
+					customer: 'customer-1',
+					accountManager: 'account-manager-one',
 					status: Status.PENDING,
 				}),
 			)
@@ -66,9 +66,9 @@ describe("Account Manager role tests", () => {
 		expect(authResult).toBeTruthy();
 	});
 
-	it("Account Managers can list orders for customer accounts they manage", async () => {
+	it('Account Managers can list orders for customer accounts they manage', async () => {
 		const orderId = uuid();
-		const userName = "account-manager-one";
+		const userName = 'account-manager-one';
 		mockGetUserName.mockReturnValue(userName);
 		mockGetRoles.mockReturnValue([Role.ACCOUNT_MANAGERS, Role.USER]);
 		authService = await AuthorizationService.getService(
@@ -81,9 +81,9 @@ describe("Account Manager role tests", () => {
 			.addEntity(
 				createOrderEntity({
 					id: orderId,
-					createdBy: "test-1",
-					customer: "customer-1",
-					accountManager: "account-manager-one",
+					createdBy: 'test-1',
+					customer: 'customer-1',
+					accountManager: 'account-manager-one',
 					status: Status.PENDING,
 				}),
 			)
@@ -92,9 +92,9 @@ describe("Account Manager role tests", () => {
 		expect(authResult).toBeTruthy();
 	});
 
-	it("Account Managers cant get an order for any customer they do not manage", async () => {
+	it('Account Managers cant get an order for any customer they do not manage', async () => {
 		const orderId = uuid();
-		const userName = "account-manager-one";
+		const userName = 'account-manager-one';
 		mockGetUserName.mockReturnValue(userName);
 		mockGetRoles.mockReturnValue([Role.ACCOUNT_MANAGERS, Role.USER]);
 		authService = await AuthorizationService.getService(
@@ -107,9 +107,9 @@ describe("Account Manager role tests", () => {
 			.addEntity(
 				createOrderEntity({
 					id: orderId,
-					createdBy: "test-1",
-					customer: "customer-1",
-					accountManager: "account-manager-two",
+					createdBy: 'test-1',
+					customer: 'customer-1',
+					accountManager: 'account-manager-two',
 					status: Status.PENDING,
 				}),
 			)
@@ -118,9 +118,9 @@ describe("Account Manager role tests", () => {
 		expect(authResult).toBeFalsy();
 	});
 
-	it("Account Managers cant list orders for any customers they do not manage", async () => {
+	it('Account Managers cant list orders for any customers they do not manage', async () => {
 		const orderId = uuid();
-		const userName = "account-manager-one";
+		const userName = 'account-manager-one';
 		mockGetUserName.mockReturnValue(userName);
 		mockGetRoles.mockReturnValue([Role.ACCOUNT_MANAGERS, Role.USER]);
 		authService = await AuthorizationService.getService(
@@ -133,9 +133,9 @@ describe("Account Manager role tests", () => {
 			.addEntity(
 				createOrderEntity({
 					id: orderId,
-					createdBy: "test-1",
-					customer: "customer-1",
-					accountManager: "account-manager-two",
+					createdBy: 'test-1',
+					customer: 'customer-1',
+					accountManager: 'account-manager-two',
 					status: Status.PENDING,
 				}),
 			)
@@ -144,9 +144,9 @@ describe("Account Manager role tests", () => {
 		expect(authResult).toBeFalsy();
 	});
 
-	it("Account Managers cant create orders", async () => {
+	it('Account Managers cant create orders', async () => {
 		const orderId = uuid();
-		const userName = "account-manager-one";
+		const userName = 'account-manager-one';
 		mockGetUserName.mockReturnValue(userName);
 		mockGetRoles.mockReturnValue([Role.ACCOUNT_MANAGERS, Role.USER]);
 		authService = await AuthorizationService.getService(
@@ -159,9 +159,9 @@ describe("Account Manager role tests", () => {
 			.addEntity(
 				createOrderEntity({
 					id: orderId,
-					createdBy: "test-1",
-					customer: "customer-2",
-					accountManager: "account-manager-one",
+					createdBy: 'test-1',
+					customer: 'customer-2',
+					accountManager: 'account-manager-one',
 					status: Status.PENDING,
 				}),
 			)
@@ -170,9 +170,9 @@ describe("Account Manager role tests", () => {
 		expect(authResult).toBeFalsy();
 	});
 
-	it("Account Managers cant update orders", async () => {
+	it('Account Managers cant update orders', async () => {
 		const orderId = uuid();
-		const userName = "account-manager-one";
+		const userName = 'account-manager-one';
 		mockGetUserName.mockReturnValue(userName);
 		mockGetRoles.mockReturnValue([Role.ACCOUNT_MANAGERS, Role.USER]);
 		authService = await AuthorizationService.getService(
@@ -185,9 +185,9 @@ describe("Account Manager role tests", () => {
 			.addEntity(
 				createOrderEntity({
 					id: orderId,
-					createdBy: "test-1",
-					customer: "customer-2",
-					accountManager: "account-manager-one",
+					createdBy: 'test-1',
+					customer: 'customer-2',
+					accountManager: 'account-manager-one',
 					status: Status.PENDING,
 				}),
 			)
@@ -196,9 +196,9 @@ describe("Account Manager role tests", () => {
 		expect(authResult).toBeFalsy();
 	});
 
-	it("Account Managers cant delete orders", async () => {
+	it('Account Managers cant delete orders', async () => {
 		const orderId = uuid();
-		const userName = "account-manager-one";
+		const userName = 'account-manager-one';
 		mockGetUserName.mockReturnValue(userName);
 		mockGetRoles.mockReturnValue([Role.ACCOUNT_MANAGERS, Role.USER]);
 		authService = await AuthorizationService.getService(
@@ -211,9 +211,9 @@ describe("Account Manager role tests", () => {
 			.addEntity(
 				createOrderEntity({
 					id: orderId,
-					createdBy: "test-1",
-					customer: "customer-2",
-					accountManager: "account-manager-one",
+					createdBy: 'test-1',
+					customer: 'customer-2',
+					accountManager: 'account-manager-one',
 					status: Status.PENDING,
 				}),
 			)

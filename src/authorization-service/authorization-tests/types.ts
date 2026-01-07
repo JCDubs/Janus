@@ -7,24 +7,24 @@ export type OrderEntityProps = {
 };
 
 export enum OrderAction {
-	GET_ORDER = "getOrder",
-	CREATE_ORDER = "createOrder",
-	UPDATE_ORDER = "updateOrder",
-	DELETE_ORDER = "deleteOrder",
-	LIST_ORDERS = "listOrders",
+	GET_ORDER = 'getOrder',
+	CREATE_ORDER = 'createOrder',
+	UPDATE_ORDER = 'updateOrder',
+	DELETE_ORDER = 'deleteOrder',
+	LIST_ORDERS = 'listOrders',
 }
 
 export enum Role {
-	CUSTOMER = "customers",
-	SALE_STAFF = "saleStaff",
-	SALE_MANAGERS = "saleManagers",
-	ACCOUNT_MANAGERS = "accountManagers",
-	ACCOUNTANTS = "accountants",
-	USER = "users",
+	CUSTOMER = 'customers',
+	SALE_STAFF = 'saleStaff',
+	SALE_MANAGERS = 'saleManagers',
+	ACCOUNT_MANAGERS = 'accountManagers',
+	ACCOUNTANTS = 'accountants',
+	USER = 'users',
 }
 
 export enum Status {
-	PENDING = "PENDING",
-	SHIPPED = "SHIPPED",
-	DELIVERED = "DELIVERED",
+	PENDING = 'PENDING',
+	SHIPPED = 'SHIPPED',
+	DELIVERED = 'DELIVERED',
 }
