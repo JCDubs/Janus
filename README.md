@@ -19,7 +19,7 @@ Janus is a TypeScript library that provides fine-grained, policy-based authoriza
 ### Key Features
 
 - 🔐 **Cedar Policy Engine** - Leverage Amazon's Cedar policy language for authorization
-- ⚡ **Serverless Optimized** - Designed for AWS Lambda with singleton caching
+- ⚡ **Serverless Optimised** - Designed for AWS Lambda with singleton caching
 - 🎯 **Type-Safe** - Full TypeScript support with comprehensive type definitions
 - 🔄 **Fluent API** - Intuitive method chaining for building authorization requests
 - 🧪 **Well Tested** - Comprehensive test coverage with real-world examples
