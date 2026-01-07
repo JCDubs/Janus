@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/JCDubs/Janus/compare/v1.0.1...v1.1.0) (2026-01-07)
+
+
+### Features
+
+* formatted files and updated the exports to include Cedar types ([9392df5](https://github.com/JCDubs/Janus/commit/9392df5558ce174321e2404fbd53c775688fba84))
+
 ## [1.0.1](https://github.com/JCDubs/Janus/compare/v1.0.0...v1.0.1) (2026-01-07)
 
 
