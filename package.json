@@ -1,6 +1,6 @@
 {
   "name": "@jcdubs/janus",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Open source Serverless authentication: A Cedar-based authorisation engine for deterministic, deny-by-default access decisions through a CDK construct and SDK libraries.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
