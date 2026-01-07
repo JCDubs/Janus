@@ -1,5 +1,5 @@
-import * as njsLambda from "aws-cdk-lib/aws-lambda-nodejs";
-import type { Construct } from "constructs";
+import * as njsLambda from 'aws-cdk-lib/aws-lambda-nodejs';
+import type { Construct } from 'constructs';
 
 /**
  * Configuration properties for the AuthLambda construct.
@@ -109,8 +109,8 @@ export class AuthLambda extends njsLambda.NodejsFunction {
 				},
 				externalModules: [
 					...(props.bundling?.externalModules || []),
-					"@aws-sdk*",
-					"@cedar-policy/cedar-wasm",
+					'@aws-sdk*',
+					'@cedar-policy/cedar-wasm',
 				],
 			},
 		});

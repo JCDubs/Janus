@@ -38,7 +38,7 @@ export class MissingAuthorizationActionError extends Error {
 	 * in error handling and logging.
 	 */
 	constructor() {
-		super("Missing authorization action details");
-		this.name = "MissingAuthorizationActionError";
+		super('Missing authorization action details');
+		this.name = 'MissingAuthorizationActionError';
 	}
 }

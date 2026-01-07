@@ -40,7 +40,7 @@ export class MissingAuthorizationPolicyError extends Error {
 	 * in error handling and logging.
 	 */
 	constructor() {
-		super("Missing authorization policy details");
-		this.name = "MissingAuthorizationPolicyError";
+		super('Missing authorization policy details');
+		this.name = 'MissingAuthorizationPolicyError';
 	}
 }

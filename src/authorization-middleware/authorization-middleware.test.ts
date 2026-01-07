@@ -1,34 +1,34 @@
-import type middy from "@middy/core";
+import type middy from '@middy/core';
 import type {
 	APIGatewayProxyEvent,
 	APIGatewayProxyResult,
 	Context,
-} from "aws-lambda";
+} from 'aws-lambda';
 import {
 	type AuthorizationConfigType,
 	AuthorizationService,
-} from "../authorization-service";
-import * as userDetails from "../user-details";
-import { loadCedarAuthorization } from "./authorization-middleware";
+} from '../authorization-service';
+import * as userDetails from '../user-details';
+import { loadCedarAuthorization } from './authorization-middleware';
 
-jest.mock("../user-details");
+jest.mock('../user-details');
 
 const _mockSetUserDetails = userDetails.setUserDetails as jest.MockedFunction<
 	typeof userDetails.setUserDetails
 >;
 
-describe("authorization Middleware tests", () => {
+describe('authorization Middleware tests', () => {
 	let beforeFn: middy.MiddlewareFn<APIGatewayProxyEvent, APIGatewayProxyResult>;
 	let _getServiceSpy: jest.SpyInstance;
 
 	const authorizationConfig: AuthorizationConfigType = {
-		principleType: "User",
-		resourceType: "Order",
-		roleType: "Role",
+		principleType: 'User',
+		resourceType: 'Order',
+		roleType: 'Role',
 	};
 
 	beforeAll(() => {
-		_getServiceSpy = jest.spyOn(AuthorizationService, "getService");
+		_getServiceSpy = jest.spyOn(AuthorizationService, 'getService');
 	});
 
 	afterAll(() => {
@@ -39,19 +39,19 @@ describe("authorization Middleware tests", () => {
 		jest.clearAllMocks();
 		const middleware = loadCedarAuthorization(authorizationConfig);
 		if (!middleware.before) {
-			throw new Error("before function not found in middleware");
+			throw new Error('before function not found in middleware');
 		}
 		beforeFn = middleware.before;
 	});
 
-	it("should successfully setup the user and authorization service without headers", async () => {
+	it('should successfully setup the user and authorization service without headers', async () => {
 		const request = {
 			event: {
 				requestContext: {
 					authorizer: {
 						claims: {
-							"cognito:username": "testUser",
-							"cognito:groups": ["admin"],
+							'cognito:username': 'testUser',
+							'cognito:groups': ['admin'],
 						},
 					},
 				},
@@ -63,10 +63,10 @@ describe("authorization Middleware tests", () => {
 			Context
 		>;
 		const mockSetUserDetails = jest
-			.spyOn(userDetails, "setUserDetails")
+			.spyOn(userDetails, 'setUserDetails')
 			.mockImplementation(() => undefined);
 		const getServiceSpy = jest
-			.spyOn(AuthorizationService, "getService")
+			.spyOn(AuthorizationService, 'getService')
 			.mockImplementation(() => Promise.resolve({} as AuthorizationService));
 
 		await expect(beforeFn(request)).resolves.not.toThrow();
@@ -74,15 +74,15 @@ describe("authorization Middleware tests", () => {
 		expect(getServiceSpy).toHaveBeenCalledWith(authorizationConfig, false);
 	});
 
-	it("should successfully setup the user and authorization service with headers", async () => {
+	it('should successfully setup the user and authorization service with headers', async () => {
 		const request = {
 			event: {
 				headers: {},
 				requestContext: {
 					authorizer: {
 						claims: {
-							"cognito:username": "testUser",
-							"cognito:groups": ["admin"],
+							'cognito:username': 'testUser',
+							'cognito:groups': ['admin'],
 						},
 					},
 				},
@@ -94,10 +94,10 @@ describe("authorization Middleware tests", () => {
 			Context
 		>;
 		const mockSetUserDetails = jest
-			.spyOn(userDetails, "setUserDetails")
+			.spyOn(userDetails, 'setUserDetails')
 			.mockImplementation(() => undefined);
 		const getServiceSpy = jest
-			.spyOn(AuthorizationService, "getService")
+			.spyOn(AuthorizationService, 'getService')
 			.mockImplementation(() => Promise.resolve({} as AuthorizationService));
 
 		await expect(beforeFn(request)).resolves.not.toThrow();
@@ -105,15 +105,15 @@ describe("authorization Middleware tests", () => {
 		expect(getServiceSpy).toHaveBeenCalledWith(authorizationConfig, false);
 	});
 
-	it("should successfully setup the user and authorization service with false cedar-refresh headers", async () => {
+	it('should successfully setup the user and authorization service with false cedar-refresh headers', async () => {
 		const request = {
 			event: {
-				headers: { "cedar-refresh": "false" },
+				headers: { 'cedar-refresh': 'false' },
 				requestContext: {
 					authorizer: {
 						claims: {
-							"cognito:username": "testUser",
-							"cognito:groups": ["admin"],
+							'cognito:username': 'testUser',
+							'cognito:groups': ['admin'],
 						},
 					},
 				},
@@ -125,10 +125,10 @@ describe("authorization Middleware tests", () => {
 			Context
 		>;
 		const mockSetUserDetails = jest
-			.spyOn(userDetails, "setUserDetails")
+			.spyOn(userDetails, 'setUserDetails')
 			.mockImplementation(() => undefined);
 		const getServiceSpy = jest
-			.spyOn(AuthorizationService, "getService")
+			.spyOn(AuthorizationService, 'getService')
 			.mockImplementation(() => Promise.resolve({} as AuthorizationService));
 
 		await expect(beforeFn(request)).resolves.not.toThrow();
@@ -136,15 +136,15 @@ describe("authorization Middleware tests", () => {
 		expect(getServiceSpy).toHaveBeenCalledWith(authorizationConfig, false);
 	});
 
-	it("should successfully setup the user and authorization service with true cedar-refresh headers", async () => {
+	it('should successfully setup the user and authorization service with true cedar-refresh headers', async () => {
 		const request = {
 			event: {
-				headers: { "cedar-refresh": "true" },
+				headers: { 'cedar-refresh': 'true' },
 				requestContext: {
 					authorizer: {
 						claims: {
-							"cognito:username": "testUser",
-							"cognito:groups": ["admin"],
+							'cognito:username': 'testUser',
+							'cognito:groups': ['admin'],
 						},
 					},
 				},
@@ -156,10 +156,10 @@ describe("authorization Middleware tests", () => {
 			Context
 		>;
 		const mockSetUserDetails = jest
-			.spyOn(userDetails, "setUserDetails")
+			.spyOn(userDetails, 'setUserDetails')
 			.mockImplementation(() => undefined);
 		const getServiceSpy = jest
-			.spyOn(AuthorizationService, "getService")
+			.spyOn(AuthorizationService, 'getService')
 			.mockImplementation(() => Promise.resolve({} as AuthorizationService));
 
 		await expect(beforeFn(request)).resolves.not.toThrow();
@@ -167,15 +167,15 @@ describe("authorization Middleware tests", () => {
 		expect(getServiceSpy).toHaveBeenCalledWith(authorizationConfig, true);
 	});
 
-	it("should throw an error", async () => {
+	it('should throw an error', async () => {
 		const request = {
 			event: {
 				headers: {},
 				requestContext: {
 					authorizer: {
 						claims: {
-							"cognito:username": "testUser",
-							"cognito:groups": ["admin"],
+							'cognito:username': 'testUser',
+							'cognito:groups': ['admin'],
 						},
 					},
 				},
@@ -187,13 +187,13 @@ describe("authorization Middleware tests", () => {
 			Context
 		>;
 		const mockSetUserDetails = jest
-			.spyOn(userDetails, "setUserDetails")
+			.spyOn(userDetails, 'setUserDetails')
 			.mockImplementation(() => undefined);
 		const getServiceSpy = jest
-			.spyOn(AuthorizationService, "getService")
-			.mockImplementation(() => Promise.reject(new Error("Test Error")));
+			.spyOn(AuthorizationService, 'getService')
+			.mockImplementation(() => Promise.reject(new Error('Test Error')));
 
-		await expect(beforeFn(request)).rejects.toThrow("Test Error");
+		await expect(beforeFn(request)).rejects.toThrow('Test Error');
 		expect(mockSetUserDetails).toHaveBeenCalledWith(request.event);
 		expect(getServiceSpy).toHaveBeenCalledWith(authorizationConfig, false);
 	});

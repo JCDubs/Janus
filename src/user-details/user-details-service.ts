@@ -1,7 +1,7 @@
-import { Logger } from "@aws-lambda-powertools/logger";
-import type { APIGatewayProxyEvent } from "aws-lambda";
+import { Logger } from '@aws-lambda-powertools/logger';
+import type { APIGatewayProxyEvent } from 'aws-lambda';
 
-const logger = new Logger({ serviceName: "user-detail-service" });
+const logger = new Logger({ serviceName: 'user-detail-service' });
 
 /**
  * User details service for extracting and managing authenticated user information.
@@ -89,27 +89,27 @@ let roles: string[] | undefined;
  */
 export function setUserDetails(authenticatedEvent: APIGatewayProxyEvent) {
 	if (!authenticatedEvent?.requestContext?.authorizer) {
-		logger.warn("The event is not an authenticated request.");
+		logger.warn('The event is not an authenticated request.');
 		return;
 	}
-	logger.debug("Getting user name...");
+	logger.debug('Getting user name...');
 	userName =
-		authenticatedEvent.requestContext?.authorizer?.claims["cognito:username"];
-	logger.debug("User name set.", { userName });
+		authenticatedEvent.requestContext?.authorizer?.claims['cognito:username'];
+	logger.debug('User name set.', { userName });
 	if (
 		typeof authenticatedEvent.requestContext?.authorizer?.claims[
-			"cognito:groups"
-		] === "string"
+			'cognito:groups'
+		] === 'string'
 	) {
 		roles = [];
 		roles.push(
-			authenticatedEvent.requestContext?.authorizer?.claims["cognito:groups"],
+			authenticatedEvent.requestContext?.authorizer?.claims['cognito:groups'],
 		);
 	} else {
 		roles =
-			authenticatedEvent.requestContext?.authorizer?.claims["cognito:groups"];
+			authenticatedEvent.requestContext?.authorizer?.claims['cognito:groups'];
 	}
-	logger.debug("User details set", {
+	logger.debug('User details set', {
 		userName,
 		roles,
 	});

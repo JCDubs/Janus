@@ -38,7 +38,7 @@ export class MissingAuthorizationResourceError extends Error {
 	 * in error handling and logging.
 	 */
 	constructor() {
-		super("Missing authorization resource details");
-		this.name = "MissingAuthorizationResourceError";
+		super('Missing authorization resource details');
+		this.name = 'MissingAuthorizationResourceError';
 	}
 }

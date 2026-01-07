@@ -1,5 +1,5 @@
-import { authorizationConfig } from "./config";
-import type { OrderEntityProps } from "./types";
+import { authorizationConfig } from './config';
+import type { OrderEntityProps } from './types';
 
 export const createOrderEntity = (orderEntityProps: OrderEntityProps) => {
 	return {

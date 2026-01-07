@@ -1,1 +1,1 @@
-export * from "./missing-authorization-policy-error";
+export * from './missing-authorization-policy-error';

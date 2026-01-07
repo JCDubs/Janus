@@ -1,5 +1,5 @@
-import fs from "node:fs";
-import path from "node:path";
+import fs from 'node:fs';
+import path from 'node:path';
 
 /**
  * Loads a file from the current directory and returns its contents as a string.
@@ -59,7 +59,7 @@ import path from "node:path";
 export const loadFileAsString = (fileName: string): string => {
 	try {
 		const filePath = path.join(__dirname, fileName);
-		const data = fs.readFileSync(filePath, "utf-8");
+		const data = fs.readFileSync(filePath, 'utf-8');
 		return data;
 	} catch (error) {
 		throw new Error(

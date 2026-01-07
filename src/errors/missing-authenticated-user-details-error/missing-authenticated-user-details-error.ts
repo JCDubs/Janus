@@ -42,7 +42,7 @@ export class MissingAuthenticatedUserDetailsError extends Error {
 	 * in error handling and logging.
 	 */
 	constructor() {
-		super("Missing authenticated user details");
-		this.name = "MissingAuthenticatedUserDetailsError";
+		super('Missing authenticated user details');
+		this.name = 'MissingAuthenticatedUserDetailsError';
 	}
 }

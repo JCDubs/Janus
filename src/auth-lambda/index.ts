@@ -1,1 +1,1 @@
-export * from "./auth-lambda";
+export * from './auth-lambda';
